@@ -1,4 +1,4 @@
-Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+Timestamp,Source,Destination,TunnelType,PacketSize,PacketType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
 1472017257.068399,127.0.0.1,127.0.0.1,UDP,48,INTEREST,/example/testApp/randomData,,1,2817859521,1000
 1472017257.073000,127.0.0.1,127.0.0.1,UDP,398,DATA,/example/testApp/randomData/testApp/%FD%00%00%01V%BB%10%D2n,10000,,,
 1472017258.335130,127.0.0.1,127.0.0.1,UDP,48,INTEREST,/example/testApp/randomData,,1,3527896822,1000

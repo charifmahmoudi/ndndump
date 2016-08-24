@@ -24,29 +24,31 @@ Note that the fields that does not apply to a type of packet will be empty.
 
 ### General fields description
 
-	Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+	Timestamp,Source,Destination,TunnelType,PacketSize,PacketType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+	Timestamp,Source,Destination,TunnelType,PacketSize,PacketType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+	
 
 #### Interest Packet fields description
 
-	Timestamp,Source,Destination,TunnelType,Name,n/a,MustBeFresh,Nonce,InterestLifetime
+	Timestamp,Source,Destination,TunnelType,PacketSize,PacketType,Name,n/a,MustBeFresh,Nonce,InterestLifetime
 
 For more information about NDN TLV, refer to [NDN Interest Packet](http://named-data.net/doc/ndn-tlv/interest.html)
 
 
 #### Data Packet fields description
 
-	Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,n/a,n/a,n/a
+	Timestamp,Source,Destination,TunnelType,PacketSize,PacketType,Name,FreshnessPeriod,n/a,n/a,n/a
 
 For more information about NDN TLV, refer to [NDN Data Packet](http://named-data.net/doc/ndn-tlv/data.html)
 
 ## Output examples
 
-	Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+	Timestamp,Source,Destination,TunnelType,PacketSize,PacketType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
 	1472017257.068399,127.0.0.1,127.0.0.1,UDP,48,INTEREST,/example/testApp/randomData,,1,2817859521,1000
 	1472017257.073000,127.0.0.1,127.0.0.1,UDP,398,DATA,/example/testApp/randomData/testApp/%FD%00%00%01V%BB%10%D2n,10000,,,
 
 
-## sniffing on the loopback interface
+## Sniffing on the loopback interface
 
 To use this tool on your local machine, the face should be connected to the NFD using the loopback interface. 
 The consumer example available on ndn-cxx can be used. however, the constructor below needs to be added :

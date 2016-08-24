@@ -122,8 +122,9 @@ Ndndump::run()
 
 
 	std::ostringstream os;
-	os << "Timestamp" << separator << "Source" << separator << "Destination"
-						<< separator << "TunnelType" << separator << "Name"<< separator
+	os << "Timestamp" << separator << "Source" << separator << "Destination" << separator
+                                                << "TunnelType"<< separator << "PacketSize"<< separator
+						<< "PacketType" << separator << "Name"<< separator
 						<< "FreshnessPeriod" << separator << "MustBeFresh" << separator
 						<< "Nonce" << separator << "InterestLifetime" << std::endl ;
 
@@ -366,15 +367,15 @@ Ndndump::skipAndProcessFrameHeader(int frameType,
 	}
 	case /*ETHERTYPE_NDN*/0x7777:
 		//os << "Tunnel Type: EthernetFrame";
-		os << separator << "EthernetFrame";
+		os << separator << separator << "EthernetFrame";
 		break;
 	case /*ETHERTYPE_NDNLP*/0x8624:
 		//os << "Tunnel Type: EthernetFrame";
-		os << separator << "EthernetFrame";
+		os << separator << separator << "EthernetFrame";
 		break;
 	case 0x0077: // pcap
 		//os << "Tunnel Type: PPP";
-		os << separator << "PPP";
+		os << separator << separator << "PPP";
 		payloadSize -= 2;
 		payload += 2;
 		break;
