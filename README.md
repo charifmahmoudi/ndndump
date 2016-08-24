@@ -24,18 +24,18 @@ Note that the fields that does not apply to a type of packet will be empty.
 
 ### General fields description
 
-Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+	Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
 
 #### Interest Packet fields description
 
-Timestamp,Source,Destination,TunnelType,Name,n/a,MustBeFresh,Nonce,InterestLifetime
+	Timestamp,Source,Destination,TunnelType,Name,n/a,MustBeFresh,Nonce,InterestLifetime
 
 For more information about NDN TLV, refer to [NDN Interest Packet](http://named-data.net/doc/ndn-tlv/interest.html)
 
 
 #### Data Packet fields description
 
-Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,n/a,n/a,n/a
+	Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,n/a,n/a,n/a
 
 For more information about NDN TLV, refer to [NDN Data Packet](http://named-data.net/doc/ndn-tlv/data.html)
 
