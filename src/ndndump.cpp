@@ -144,13 +144,13 @@ Ndndump::onCapturedPacket(const struct pcap_pkthdr* header, const uint8_t* packe
     return;
   }
 
-  Block block;
-  bool isOk = Block::fromBuffer(payload, payloadSize, block);
-  if (!isOk) {
+  std::tuple<bool, Block> tBlock = Block::fromBuffer(payload, payloadSize);
+
+  if (!std::get<0>(tBlock)) {
     // if packet is fragmented, we will not be able to process it
     return;
   }
-
+  Block block = std::get<1>(tBlock);
   /// \todo Detect various header (LocalControlHeader, NDNLP, etc.)
 
   try {
