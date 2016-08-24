@@ -41,10 +41,24 @@ For more information about NDN TLV, refer to [NDN Data Packet](http://named-data
 
 ## Output examples
 
-Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
-1472017257.068399,127.0.0.1,127.0.0.1,UDP,48,INTEREST,/example/testApp/randomData,,1,2817859521,1000
-1472017257.073000,127.0.0.1,127.0.0.1,UDP,398,DATA,/example/testApp/randomData/testApp/%FD%00%00%01V%BB%10%D2n,10000,,,
+	Timestamp,Source,Destination,TunnelType,Name,FreshnessPeriod,MustBeFresh,Nonce,InterestLifetime
+	1472017257.068399,127.0.0.1,127.0.0.1,UDP,48,INTEREST,/example/testApp/randomData,,1,2817859521,1000
+	1472017257.073000,127.0.0.1,127.0.0.1,UDP,398,DATA,/example/testApp/randomData/testApp/%FD%00%00%01V%BB%10%D2n,10000,,,
 
+
+## sniffing on the loopback interface
+
+To use this tool on your local machine, the face should be connected to the NFD using the loopback interface. 
+The consumer example available on ndn-cxx can be used. however, the constructor below needs to be added :
+
+	Consumer(
+	//initiate the face on loopback interface
+		: m_face(std::string("127.0.0.1"))
+	  {
+
+	  }
+
+ndn-cxx examples documentation is available [here](https://github.com/named-data/ndn-cxx/blob/master/docs/INSTALL.rst)
 
 ## Prerequisites
 
