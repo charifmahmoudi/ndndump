@@ -25,6 +25,8 @@
 #include <ndn-cxx/name.hpp>
 #include <boost/regex.hpp>
 
+#include <fstream>      // std::ofstream
+
 namespace ndn {
 namespace tools {
 
@@ -43,7 +45,8 @@ public:
 
   Ndndump()
     : isVerbose(false)
-    , pcapProgram("(ether proto 0x8624) || (tcp port 6363) || (udp port 6363)")
+  , isCSV(false)
+  , pcapProgram("(ether proto 0x8624) || (tcp port 6363) || (udp port 6363)")
     // , isSuccinct(false)
     // , isMatchInverted(false)
     // , shouldPrintStructure(false)
@@ -54,6 +57,11 @@ public:
 
   void
   run();
+  void
+  stop()
+  {
+	  ofs.close();
+  }
 
 private:
   static void
@@ -89,6 +97,7 @@ private:
 
 public:
   bool isVerbose;
+  bool isCSV;
   // bool isSuccinct;
   // bool isMatchInverted;
   // bool shouldPrintStructure;
@@ -99,11 +108,13 @@ public:
   std::string interface;
   boost::regex nameFilter;
   std::string inputFile;
-  // std::string outputFile;
+  std::string outputFile;
+  std::string separator;
 
 private:
   pcap_t* m_pcap;
   int m_dataLinkType;
+  std::ofstream ofs;
 };
 
 

@@ -22,6 +22,7 @@
 #include <boost/program_options/options_description.hpp>
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/parsers.hpp>
+#include <signal.h>
 
 namespace po = boost::program_options;
 
@@ -43,18 +44,27 @@ void
 usage(std::ostream& os, const std::string& appName, const po::options_description& options)
 {
   os << "Usage:\n"
-     << "  " << appName << " [-i interface] [-f name-filter] [tcpdump-expression] \n"
+     << "  " << appName << " [-s separator] [-o output-csv-file] [-i interface] [-f name-filter] [tcpdump-expression] \n"
      << "\n"
      << "Default tcpdump-expression:\n"
      << "  '(ether proto 0x8624) || (tcp port 6363) || (udp port 6363)'\n"
      << "\n";
   os << options;
 }
+ndn::tools::Ndndump instance;
+
+void close_handler(int s){
+           printf("Caught signal %d\nclosing files",s);
+           instance.stop();
+           exit(1);
+
+}
+
 
 int
 main(int argc, char* argv[])
 {
-  ndn::tools::Ndndump instance;
+
 
   po::options_description visibleOptions;
   visibleOptions.add_options()
@@ -67,9 +77,13 @@ main(int argc, char* argv[])
      "When  parsing  and  printing, produce verbose output")
     // ("write,w", po::value<std::string>(&instance.outputFile),
     //  "Write the raw packets to file rather than parsing and printing them out")
-    ("filter,f", po::value<boost::regex>(&instance.nameFilter),
-     "Regular expression to filter out Interest and Data packets")
-    ;
+     ("filter,f", po::value<boost::regex>(&instance.nameFilter),
+      "Regular expression to filter out Interest and Data packets")
+      ("separator,s", po::value<std::string>(&instance.separator),
+       "Separator used for the output")
+       ("output,o", po::value<std::string>(&instance.outputFile),
+        "File to be used as output for the CSV format")
+              ;
 
   po::options_description hiddenOptions;
   hiddenOptions.add_options()
@@ -108,8 +122,16 @@ main(int argc, char* argv[])
   }
 
   if (vm.count("verbose") > 0) {
-    instance.isVerbose = true;
-  }
+      instance.isVerbose = true;
+    }
+
+  if (vm.count("separator") == 0) {
+      instance.separator = std::string(" ");
+    }
+
+  if (vm.count("output") > 0) {
+      instance.isCSV = true;
+    }
 
   if (vm.count("pcap-program") > 0) {
     typedef std::vector<std::string> Strings;
@@ -125,6 +147,14 @@ main(int argc, char* argv[])
     usage(std::cerr, argv[0], visibleOptions);
     return 2;
   }
+
+  struct sigaction sigIntHandler;
+
+     sigIntHandler.sa_handler = close_handler;
+     sigemptyset(&sigIntHandler.sa_mask);
+     sigIntHandler.sa_flags = 0;
+
+     sigaction(SIGINT, &sigIntHandler, NULL);
 
   instance.run();
 
